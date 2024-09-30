@@ -40,7 +40,7 @@ void* robo_especionar(void* arg) {
 
     return NULL;
 }
-
+//Função similar ao do robo, diz que está pronto, mas so atua depois que os robos fazem seu trabalho
 void* caminhao_transporte(void* arg) {
     int id = *((int*)arg);
 
@@ -62,7 +62,7 @@ void* caminhao_transporte(void* arg) {
 int main(void) {
     int qtd_robos, qtd_cami;
 
-    printf("Digite o número de robôs de inspeção: ");
+    printf("Digite o número de robôs de inspeção: "); //pergunta a quantidade de rodos e caminhões
     scanf("%d", &qtd_robos);
     printf("Digite o número de caminhões: \n");
     scanf("%d", &qtd_cami);
@@ -70,11 +70,11 @@ int main(void) {
     pthread_t robo[qtd_robos], caminhao[qtd_cami];
     int id_robo[qtd_robos], id_cami[qtd_cami];
 
-    pthread_barrier_init(&barreira, NULL, qtd_robos + qtd_cami);
+    pthread_barrier_init(&barreira, NULL, qtd_robos + qtd_cami); // cria todas as threads
     pthread_barrier_init(&barreira2, NULL, qtd_robos + qtd_cami);
 
-    for (int ciclo = 0; ciclo < TOTAL_CICLOS; ciclo++) {
-        for (int i = 0; i < qtd_robos; i++) {
+    for (int ciclo = 0; ciclo < TOTAL_CICLOS; ciclo++) { // o total de ciclos é definido como variavel global e signica
+        for (int i = 0; i < qtd_robos; i++) {                                   //a quantidade de vezes que os robos vão inspecionar e os caminhãos  vão carregar
             id_robo[i] = i + 1;
             pthread_create(&robo[i], NULL, robo_especionar, &id_robo[i]);
         }
@@ -91,9 +91,9 @@ int main(void) {
             pthread_join(caminhao[i], NULL);
         }
     }
-
+// após todos os ciclos a thread principal vai exibir a mensagem final:
     printf("Todos os robôs de inspeção e caminhões completaram suas operações.\n");
-
+// o mutex e as barreiras são destruidas
     pthread_mutex_destroy(&mutex);
     pthread_barrier_destroy(&barreira);
     pthread_barrier_destroy(&barreira2);
