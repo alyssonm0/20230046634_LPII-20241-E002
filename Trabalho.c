@@ -93,7 +93,7 @@ int main(void) {
     }
 // após todos os ciclos a thread principal vai exibir a mensagem final:
     printf("Todos os robôs de inspeção e caminhões completaram suas operações.\n");
-// o mutex e as barreiras são destruidas
+// o mutex e as barreiras são destruidas.
     pthread_mutex_destroy(&mutex);
     pthread_barrier_destroy(&barreira);
     pthread_barrier_destroy(&barreira2);
